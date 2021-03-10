@@ -1,0 +1,25 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  border: none;
+  outline: none;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  background-color: #2f3640;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  color: #fbc531;
+}
