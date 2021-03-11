@@ -7,7 +7,12 @@ function Home() {
 
   const listMapping = lists?.map((list) => (
     <div key={list.id} className="col-sm-4 mb-3">
-      <List list={list} listId={list.id} listCreated={list.created} />
+      <List
+        list={list}
+        listId={list.id}
+        listCreated={list.created}
+        listTitle={list.title}
+      />
     </div>
   ));
   return (

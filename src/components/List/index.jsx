@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
-import { useStateValue } from "../../Context/StateProvider";
 import ListStyled from "./styles";
+import { useStateValue } from "../../Context/StateProvider";
+// components
+import ListAdd from "../ListAdd";
 
-function List({ listId, listCreated }) {
+function List({ listId, listCreated, listTitle }) {
   const [listClicked, setListClicked] = useState(listCreated);
   const [title, setTitle] = useState("");
-
+  const inputRef = useRef(title);
   const [{ lists }, dispatch] = useStateValue();
 
   const addListTitle = (e) => {
@@ -25,8 +27,9 @@ function List({ listId, listCreated }) {
     });
     setTitle("");
   };
-  console.log({ lists });
-
+  console.log("listTitle ->>", listTitle);
+  console.log("title ->>", title);
+  console.log("inputRef ->>", inputRef);
   return (
     <ListStyled
       listClicked={listClicked}
@@ -36,12 +39,7 @@ function List({ listId, listCreated }) {
       <form onSubmit={addListTitle}>
         {!listClicked ? (
           // if the list adding field is active
-          <div className="d-flex align-items-center">
-            <i className="fas fa-plus me-2"></i>
-            <span>
-              {lists.map((value) => value.id === listId && value.placeholder)}
-            </span>
-          </div>
+          <ListAdd listId={listId} />
         ) : (
           // if the list adding field is deactive
           <>
@@ -50,8 +48,14 @@ function List({ listId, listCreated }) {
                 className="w-100 list"
                 type="text"
                 value={title}
-                placeholder="Liste başlığını girin..."
-                onChange={(e) => setTitle(e.target.value)}
+                placeholder={title || "Liste başlığını girin..."}
+                onChange={(e) =>
+                  setTitle(
+                    lists.map(
+                      (value) => value.id === listId && e.target.value
+                    )[0]
+                  )
+                }
               />
             </div>
             <div className="w-100 d-flex align-items-center mt-2">
@@ -76,5 +80,6 @@ export default List;
 
 List.propTypes = {
   listId: PropTypes.string,
+  listTitle: PropTypes.string,
   listCreated: PropTypes.bool,
 };
