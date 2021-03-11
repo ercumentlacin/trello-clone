@@ -1,20 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import ListStyled from "./styles";
 import { useStateValue } from "../../Context/StateProvider";
 // components
 import ListAdd from "../ListAdd";
+import ListTitle from "../ListTitle";
 
 function List({ listId, listCreated, listTitle }) {
+  const [{ lists }, dispatch] = useStateValue();
   const [listClicked, setListClicked] = useState(listCreated);
   const [title, setTitle] = useState("");
-  const inputRef = useRef(title);
-  const [{ lists }, dispatch] = useStateValue();
-
+  console.log(lists);
   const addListTitle = (e) => {
     e.preventDefault();
-
+    // add list in lists
     dispatch({
       type: "ADD_LIST",
       payload: {
@@ -27,49 +27,36 @@ function List({ listId, listCreated, listTitle }) {
     });
     setTitle("");
   };
-  console.log("listTitle ->>", listTitle);
-  console.log("title ->>", title);
-  console.log("inputRef ->>", inputRef);
+
+  // title change area on
+  const handleTitleChnageOn = () => {
+    !listClicked && setListClicked(true);
+  };
+  // title change area off
+  const handleTitleChnageOff = () => {
+    listClicked ? setListClicked(false) : null;
+  };
+
   return (
     <ListStyled
       listClicked={listClicked}
       className="p-2 rounded"
-      onClick={!listClicked ? () => setListClicked(true) : null}
+      onClick={handleTitleChnageOn}
     >
       <form onSubmit={addListTitle}>
         {!listClicked ? (
           // if the list adding field is active
-          <ListAdd listId={listId} />
+          <ListAdd listId={listId} handleTitleChnageOn={handleTitleChnageOn} />
         ) : (
           // if the list adding field is deactive
-          <>
-            <div className="w-100">
-              <input
-                className="w-100 list"
-                type="text"
-                value={title}
-                placeholder={title || "Liste başlığını girin..."}
-                onChange={(e) =>
-                  setTitle(
-                    lists.map(
-                      (value) => value.id === listId && e.target.value
-                    )[0]
-                  )
-                }
-              />
-            </div>
-            <div className="w-100 d-flex align-items-center mt-2">
-              <button className="btn- btn-success rounded" type="submit">
-                Listeye ekle
-              </button>
-              <span
-                className="text-danger ms-auto"
-                onClick={() => setListClicked(false)}
-              >
-                <i className="far fa-times-circle"></i>
-              </span>
-            </div>
-          </>
+          <ListTitle
+            listTitle={listTitle}
+            listId={listId}
+            title={title}
+            setTitle={setTitle}
+            handleTitleChnageOff={handleTitleChnageOff}
+            listCreated={listCreated}
+          />
         )}
       </form>
     </ListStyled>

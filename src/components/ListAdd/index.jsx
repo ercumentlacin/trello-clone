@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { useStateValue } from "../../Context/StateProvider";
 
 function ListAdd({ listId }) {
-  const [{ lists }] = useStateValue();
+  const [{ anotherLists }] = useStateValue();
 
   return (
     <div className="d-flex align-items-center">
       <i className="fas fa-plus me-2"></i>
       <span>
-        {lists.map((value) => value.id === listId && value.placeholder)}
+        {anotherLists[0].id === listId ? "Başka bir liste ekle" : "Liste ekle"}
       </span>
     </div>
   );

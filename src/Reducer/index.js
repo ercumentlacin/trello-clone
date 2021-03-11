@@ -4,6 +4,14 @@ export const initialState = {
   lists: [
     { title: "", id: uuidv4(), created: false, placeholder: "Liste ekle" },
   ],
+  anotherLists: [
+    {
+      title: "",
+      id: uuidv4(),
+      created: false,
+      placeholder: "Başka bir liste ekle",
+    },
+  ],
   todos: [],
   todoCardItems: [],
   allCards: [],

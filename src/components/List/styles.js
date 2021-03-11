@@ -10,20 +10,29 @@ const ListStyled = styled.div`
   }
 
   input.list {
-    background-color: #fff;
-    box-shadow: inset 0 0 0 2px #0079bf;
+    background: #7f8fa6;
+    color: #2f3640;
     display: block;
     margin: 0;
     transition: margin 85ms ease-in, background 85ms ease-in;
     border-radius: 3px;
     line-height: 20px;
     padding: 8px 12px;
-    color: #172b4d;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
       Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 14px;
     line-height: 20px;
-    font-weight: 400;
+    font-weight: 600;
+    &::placeholder {
+      color: #2f3640;
+      font-weight: 600;
+    }
+    &:focus {
+      font-weight: 400;
+      color: #172b4d;
+      background-color: #fff;
+      box-shadow: inset 0 0 0 2px #0079bf;
+    }
   }
 `;
 
