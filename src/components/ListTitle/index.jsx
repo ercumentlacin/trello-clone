@@ -17,7 +17,6 @@ function ListTitle({
   const [{ lists, anotherLists }, dispatch] = useStateValue(); //eslint-disable-line
 
   useEffect(() => {
-    console.log(refListTitle);
     lists.filter((list) =>
       list.id === listId
         ? !list.created

@@ -8,11 +8,10 @@ import ListAdd from "../ListAdd";
 import ListTitle from "../ListTitle";
 
 function List({ listId, listCreated, listTitle }) {
-  const [{ lists }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const [listClicked, setListClicked] = useState(listCreated);
   const [title, setTitle] = useState("");
   const refListTitle = useRef(title);
-  console.log({ lists });
   const addListTitle = (e) => {
     e.preventDefault();
     // add list in lists

@@ -8,10 +8,9 @@ import CardList from "../CardList";
 import CardAdd from "../CardAdd";
 
 function Card({ listId }) {
-  const [{ lists }, dispatch] = useStateValue(); // eslint-disable-line
+  const [, dispatch] = useStateValue(); // eslint-disable-line
   const [inputActive, setInputActive] = useState(false);
   const [cardTitle, setCardTitle] = useState("");
-  console.log({ lists });
   // card submit
   const cardSubmit = () => {
     setInputActive(true);
