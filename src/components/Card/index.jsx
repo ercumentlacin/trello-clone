@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useStateValue } from "../../Context/StateProvider";
 import CardStyled from "./styles";
 import CardTitle from "../CardTitle";
+import CardList from "../CardList";
+import CardAdd from "../CardAdd";
 
 function Card({ listId }) {
   const [{ lists }, dispatch] = useStateValue(); // eslint-disable-line
@@ -37,46 +39,24 @@ function Card({ listId }) {
   return (
     <CardStyled>
       <div className="trellocard">
+        <CardList
+          inputActive={inputActive}
+          listId={listId}
+          cardTitle={cardTitle}
+          getCardTitle={getCardTitle}
+          onEnterPress={onEnterPress}
+          onSubmit={() => setInputActive(false)}
+        />
         {!inputActive ? (
-          <CardTitle onClick={() => setInputActive(true)} />
-        ) : (
-          <>
-            <div className="card-list">
-              {lists
-                .filter((list) => list.id === listId)
-                .map(({ cards }) =>
-                  cards.length
-                    ? cards.map((card) => (
-                        <div className="card-list__detail" key={card.id}>
-                          {card.title}
-                        </div>
-                      ))
-                    : null
-                )}
-            </div>
-            <textarea
-              placeholder="Bu kart için başlık girin..."
-              className="w-100 rounded"
-              onSubmit={() => setInputActive(false)}
-              value={cardTitle}
-              onChange={getCardTitle}
-              onKeyDown={onEnterPress}
-            ></textarea>
-          </>
-        )}
+          <CardTitle listId={listId} onClick={() => setInputActive(true)} />
+        ) : null}
 
-        <div className="w-100 d-flex align-items-center mt-2">
-          <button
-            onClick={cardSubmit}
-            className="btn- btn-success rounded"
-            type="submit"
-          >
-            Kart Ekle
-          </button>
-          <span className="text-danger ms-auto">
-            <i className="far fa-times-circle"></i>
-          </span>
-        </div>
+        {inputActive && (
+          <CardAdd
+            cardSubmit={cardSubmit}
+            onClick={() => setInputActive(false)}
+          />
+        )}
       </div>
     </CardStyled>
   );

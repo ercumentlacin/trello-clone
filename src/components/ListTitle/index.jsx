@@ -14,7 +14,7 @@ function ListTitle({
   refListTitle,
   addListTitle,
 }) {
-  const [{ lists, anotherLists }] = useStateValue();
+  const [{ lists, anotherLists }, dispatch] = useStateValue(); //eslint-disable-line
 
   useEffect(() => {
     console.log(refListTitle);
@@ -40,18 +40,35 @@ function ListTitle({
     }
   };
 
+  const listDelete = () => {
+    dispatch({
+      type: "DELETE_LIST",
+      payload: {
+        id: listId,
+      },
+    });
+  };
+
   return (
     <div>
-      <input
-        onKeyDown={handleKeyDown}
-        className={listTitle.length ? "w-100 list passive" : "w-100 list"}
-        type="text"
-        value={title || listTitle}
-        placeholder={title || "Liste başlığını girin..."}
-        onChange={(e) => setTitle(e.target.value)}
-        ref={refListTitle}
-      />
-
+      <div className="d-flex align-items-center">
+        <input
+          onKeyDown={handleKeyDown}
+          className={listTitle.length ? "w-100 list passive" : "w-100 list"}
+          type="text"
+          value={title || listTitle}
+          placeholder={title || "Liste başlığını girin..."}
+          onChange={(e) => setTitle(e.target.value)}
+          ref={refListTitle}
+        />
+        <span
+          onClick={listDelete}
+          className="ms-auto cursor ps-2"
+          title="Listeyi sil"
+        >
+          <i className="fas fa-trash-alt text-warning"></i>
+        </span>
+      </div>
       {!listCreated ? (
         <div className="w-100 d-flex align-items-center mt-2">
           <button

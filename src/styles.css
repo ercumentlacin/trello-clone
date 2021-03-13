@@ -23,3 +23,7 @@ a {
 a:hover {
   color: #fbc531;
 }
+
+.cursor {
+  cursor: pointer;
+}

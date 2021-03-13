@@ -6,7 +6,7 @@ function Home() {
   const [{ lists, anotherLists }] = useStateValue();
 
   const listMapping = lists?.map((list) => (
-    <div key={list.id} className="col-sm-4 mb-3">
+    <div key={list.id} className="col-sm-6 col-md-4 col-lg-3 mb-3">
       <List
         list={list}
         listId={list.id}
@@ -19,7 +19,7 @@ function Home() {
   const newListMapping = lists
     ?.filter((list) => list?.title?.length)
     .map((list) => (
-      <div key={list.id} className="col-sm-4 mb-3">
+      <div key={list.id} className="col-sm-6 col-md-4 col-lg-3 mb-3">
         <List
           list={list}
           listId={list.id}
@@ -35,7 +35,7 @@ function Home() {
         {lists.length <= 1 ? listMapping : newListMapping}
         {/* another list add */}
         {lists.length > 1 && (
-          <div className="col-sm-4 mb-3">
+          <div className="col-sm-6 col-md-4 col-lg-3 mb-3">
             <List
               list={anotherLists}
               listId={anotherLists[0].id}

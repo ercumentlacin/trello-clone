@@ -26,10 +26,8 @@ export const initialState = {
 };
 
 function reducer(state = initialState, action) {
-  let index; // ->> the index of the todo be deleted
   let listIndex; // ->> the index of the list be deleted
-  let newTodos; // ->> new list created after the todo was deleted
-  let newAllCards; // ->> new list created after the list was deleted
+  let newLists; // ->> new list created after the list was deleted
   switch (action.type) {
     case "ADD_LIST":
       return {
@@ -48,52 +46,22 @@ function reducer(state = initialState, action) {
           ),
         ],
       };
-    case "ADD_CARD_ITEMS":
-      return {
-        ...state,
-        allCards: [...state.allCards, action.cardItems],
-      };
-    case "ADD_TODO":
-      return {
-        ...state,
-        todoList: [...state.todoList, action.todos],
-      };
-    case "ADD_CATEGORY":
-      return {
-        ...state,
-        todos: [...state.todos, action.todos],
-      };
-    case "DELETE_TODO":
-      index = state.todoList.findIndex(
-        (todosItem) => todosItem.todoUniqId === action.id
+    case "DELETE_LIST":
+      listIndex = state.lists.findIndex(
+        (list) => list.id === action.payload.id
       );
-      newTodos = [...state.todoList];
+      newLists = [...state.lists];
 
-      if (index >= 0) {
-        newTodos.splice(index, 1);
+      if (listIndex >= 0) {
+        newLists.splice(listIndex, 1);
       } else {
         console.warn(
-          `Cant remove product (id: ${action.id}) as its not in basket!`
+          `Cant remove list (id: ${action.payload.id}) as its not in list!`
         );
       }
       return {
         ...state,
-        todoList: newTodos,
-      };
-    case "DELETE_LIST":
-      listIndex = state.allCards.findIndex(
-        (cardListItems) => cardListItems.id === action.id
-      );
-      newAllCards = [...state.allCards];
-
-      if (listIndex >= 0) {
-        newAllCards.splice(listIndex, 1);
-      } else {
-        console.warn(`Cant remove card (id: ${action.id}) as its not in list!`);
-      }
-      return {
-        ...state,
-        allCards: newAllCards,
+        lists: newLists,
       };
     default:
       return state;
