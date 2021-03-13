@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useStateValue } from "../../Context/StateProvider";
 
-function CardTitle({ onClick, listId }) {
-  const [{ lists }] = useStateValue();
-
+function CardTitle({ onClick }) {
   return (
     <div className="d-flex align-items-center card__title rounded">
       <i className="fas fa-plus me-2"></i>
@@ -12,11 +9,7 @@ function CardTitle({ onClick, listId }) {
         onClick={onClick}
         className="w-100 list"
         type="text"
-        placeholder={
-          lists.filter((list) => list.id === listId)[0].cards.length
-            ? "Başkabir kart ekle"
-            : "Kart Ekle"
-        }
+        placeholder="Kart ekle"
       />
     </div>
   );
@@ -26,5 +19,4 @@ export default CardTitle;
 
 CardTitle.propTypes = {
   onClick: PropTypes.func,
-  listId: PropTypes.string,
 };

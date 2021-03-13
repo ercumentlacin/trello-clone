@@ -24,8 +24,16 @@ export const initialState = {
 function reducer(state = initialState, action) {
   let listIndex; // ->> the index of the list be deleted
   let newLists; // ->> new list created after the list was deleted
+  let oldList;
+  if (JSON.parse(localStorage.getItem("lists"))) {
+    oldList = JSON.parse(localStorage.getItem("lists"));
+  } else {
+    oldList = [];
+  }
   switch (action.type) {
     case "ADD_LIST":
+      oldList.push(state.lists[state.lists.length - 1]); // listteki her zaman sonuncuyu ekletiriyorm
+      localStorage.setItem("lists", JSON.stringify(oldList));
       return {
         ...state,
         lists: [...state.lists, action.payload],
