@@ -34,6 +34,10 @@ const ListStyled = styled.div`
       box-shadow: inset 0 0 0 2px #0079bf;
     }
   }
+  input.list.passive {
+    background: transparent;
+    color: #f5f6fa;
+  }
 `;
 
 export default ListStyled;

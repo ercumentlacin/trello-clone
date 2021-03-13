@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { useStateValue } from "../../Context/StateProvider";
 import CardStyled from "./styles";
+import CardTitle from "../CardTitle";
 
 function Card({ listId }) {
   const [{ lists }, dispatch] = useStateValue(); // eslint-disable-line
@@ -22,6 +23,14 @@ function Card({ listId }) {
     });
     setCardTitle("");
   };
+  // If enter is pressed in the textarea area && card submit
+  const onEnterPress = (e) => {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      e.preventDefault();
+      cardSubmit();
+    }
+  };
+  // set card title
   const getCardTitle = (e) => {
     setCardTitle(e.target.value);
   };
@@ -29,30 +38,29 @@ function Card({ listId }) {
     <CardStyled>
       <div className="trellocard">
         {!inputActive ? (
-          <div className="d-flex align-items-center card__title rounded">
-            <i className="fas fa-plus me-2"></i>
-            <input
-              onClick={() => setInputActive(true)}
-              className="w-100 list"
-              type="text"
-              placeholder="Kart ekle"
-            />
-          </div>
+          <CardTitle onClick={() => setInputActive(true)} />
         ) : (
           <>
-            {lists
-              .filter((list) => list.id === listId)
-              .map(({ cards }) =>
-                cards.length
-                  ? cards.map((card) => <div key={card.id}> {card.title}</div>)
-                  : null
-              )}
+            <div className="card-list">
+              {lists
+                .filter((list) => list.id === listId)
+                .map(({ cards }) =>
+                  cards.length
+                    ? cards.map((card) => (
+                        <div className="card-list__detail" key={card.id}>
+                          {card.title}
+                        </div>
+                      ))
+                    : null
+                )}
+            </div>
             <textarea
               placeholder="Bu kart için başlık girin..."
               className="w-100 rounded"
               onSubmit={() => setInputActive(false)}
               value={cardTitle}
               onChange={getCardTitle}
+              onKeyDown={onEnterPress}
             ></textarea>
           </>
         )}

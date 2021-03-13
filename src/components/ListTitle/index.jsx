@@ -44,7 +44,7 @@ function ListTitle({
     <div>
       <input
         onKeyDown={handleKeyDown}
-        className="w-100 list"
+        className={listTitle.length ? "w-100 list passive" : "w-100 list"}
         type="text"
         value={title || listTitle}
         placeholder={title || "Liste başlığını girin..."}
