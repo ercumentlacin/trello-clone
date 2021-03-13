@@ -19,10 +19,6 @@ export const initialState = {
       cards: [],
     },
   ],
-  todos: [],
-  todoCardItems: [],
-  allCards: [],
-  todoList: [],
 };
 
 function reducer(state = initialState, action) {
