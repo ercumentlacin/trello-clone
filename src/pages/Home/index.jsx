@@ -17,7 +17,7 @@ function Home() {
   ));
 
   const newListMapping = lists
-    ?.filter((list) => list.title.length)
+    ?.filter((list) => list?.title?.length)
     .map((list) => (
       <div key={list.id} className="col-sm-4 mb-3">
         <List

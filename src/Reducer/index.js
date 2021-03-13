@@ -2,7 +2,13 @@ import { v4 as uuidv4 } from "uuid";
 
 export const initialState = {
   lists: [
-    { title: "", id: uuidv4(), created: false, placeholder: "Liste ekle" },
+    {
+      title: "",
+      id: uuidv4(),
+      created: false,
+      placeholder: "Liste ekle",
+      cards: [],
+    },
   ],
   anotherLists: [
     {
@@ -10,6 +16,7 @@ export const initialState = {
       id: uuidv4(),
       created: false,
       placeholder: "Başka bir liste ekle",
+      cards: [],
     },
   ],
   todos: [],
@@ -28,6 +35,18 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         lists: [...state.lists, action.payload],
+      };
+    case "ADD_CARD":
+      return {
+        ...state,
+        lists: [
+          ...state.lists,
+          state.lists.filter(
+            (list) =>
+              list.id === action.payload.listId &&
+              list.cards.push(action.payload)
+          ),
+        ],
       };
     case "ADD_CARD_ITEMS":
       return {
