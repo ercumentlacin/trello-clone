@@ -4,7 +4,7 @@ import { useStateValue } from "../../Context/StateProvider";
 
 function Home() {
   const [{ lists, anotherLists }] = useStateValue();
-
+  console.log(lists);
   const listMapping = lists?.map((list) => (
     <div key={list.id} className="col-sm-6 col-md-4 col-lg-3 mb-3">
       <List

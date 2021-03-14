@@ -24,6 +24,7 @@ export const initialState = {
 function reducer(state = initialState, action) {
   let listIndex; // ->> the index of the list be deleted
   let newLists; // ->> new list created after the list was deleted
+
   switch (action.type) {
     case "ADD_LIST":
       return {
@@ -34,12 +35,12 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         lists: [
-          ...state.lists,
-          state.lists.filter(
-            (list) =>
-              list.id === action.payload.listId &&
-              list.cards.push(action.payload)
-          ),
+          ...state.lists.map((list) => {
+            if (list.id === action.payload.listId) {
+              list.cards.push(action.payload);
+            }
+            return list;
+          }),
         ],
       };
     case "DELETE_LIST":
